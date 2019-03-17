@@ -1,10 +1,10 @@
-import { users, createUser } from "./User";
+import { users, signup } from "./User";
 
 export default {
   Query: {
     users
   },
   Mutation: {
-    createUser
+    signup
   }
 };

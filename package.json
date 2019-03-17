@@ -1,16 +1,24 @@
 {
-  "name": "nuxt-graphql-chat-sample",
+  "name": "graphql-chat-server",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "author": "Yuttasak Pannawat <yuttasakcom@gmail.com>",
-  "license": "MIT",
   "scripts": {
-    "dev:client": "npm run dev --prefix client",
-    "dev:server": "env-cmd ./dev.env nodemon server/server.js --exec babel-node",
-    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "dev": "env-cmd ./dev.env nodemon src/server.js --exec babel-node",
     "get-schema": "graphql get-schema -p prisma --dotenv dev.env",
     "prisma-deploy": "prisma deploy --env-file dev.env"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuttasakcom/graphql-chat-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuttasakcom/graphql-chat-server/issues"
+  },
+  "homepage": "https://github.com/yuttasakcom/graphql-chat-server#readme",
   "dependencies": {
     "apollo-server-express": "^2.4.8",
     "env-cmd": "^8.0.2",
@@ -23,7 +31,6 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
-    "concurrently": "^4.1.0",
     "nodemon": "^1.18.10"
   }
 }
