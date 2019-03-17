@@ -1,0 +1,29 @@
+{
+  "name": "nuxt-graphql-chat-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yuttasak Pannawat <yuttasakcom@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "env-cmd ./dev.env nodemon server/server.js --exec babel-node",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "get-schema": "graphql get-schema -p prisma --dotenv dev.env",
+    "prisma-deploy": "prisma deploy --env-file dev.env"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.4.8",
+    "env-cmd": "^8.0.2",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "graphql-cli": "^3.0.11",
+    "prisma-binding": "^2.3.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10"
+  }
+}
