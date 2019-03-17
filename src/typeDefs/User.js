@@ -11,10 +11,23 @@ export default gql`
 
   type User {
     id: ID!
-    username: String!
+    name: String!
+    email: String!
+    password: String!
+    role: Role!
+    status: UserStatus!
+    createdAt: String!
+    updatedAt: String!
   }
 
   input SignUpInput {
-    username: String!
+    name: String!
+    email: String!
+    password: String!
+  }
+
+  enum UserStatus {
+    ENABLE
+    DISABLE
   }
 `;

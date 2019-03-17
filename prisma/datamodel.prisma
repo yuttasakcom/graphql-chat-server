@@ -1,4 +1,20 @@
 type User {
   id: ID! @id
-  username: String!
+  name: String!
+  email: String! @unique
+  password: String!
+  role: Role!
+  status: UserStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ENABLE
+  DISABLE
 }

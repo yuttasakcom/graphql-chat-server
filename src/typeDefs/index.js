@@ -1,6 +1,7 @@
 import { gql } from "apollo-server-express";
 
 import User from "./User";
+import Role from "./Role";
 
 const baseTypeDefs = gql`
   type Query {
@@ -16,4 +17,4 @@ const baseTypeDefs = gql`
   }
 `;
 
-export default [baseTypeDefs, User];
+export default [baseTypeDefs, User, Role];

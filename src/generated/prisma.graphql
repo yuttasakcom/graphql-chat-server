@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun Mar 17 2019 21:54:21 GMT+0700 (Indochina Time)
+# timestamp: Sun Mar 17 2019 23:47:06 GMT+0700 (Indochina Time)
 
 type AggregateUser {
   count: Int!
@@ -9,6 +9,8 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -64,13 +66,24 @@ type Query {
   ): Node
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
-  username: String!
+  name: String!
+  email: String!
+  password: String!
+  role: Role!
+  status: UserStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -84,7 +97,13 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  username: String!
+  name: String!
+  email: String!
+  password: String!
+  role: Role!
+  status: UserStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """An edge in a connection."""
@@ -99,13 +118,36 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  username_ASC
-  username_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  role_ASC
+  role_DESC
+  status_ASC
+  status_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  username: String!
+  name: String!
+  email: String!
+  password: String!
+  role: Role!
+  status: UserStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum UserStatus {
+  ENABLE
+  DISABLE
 }
 
 type UserSubscriptionPayload {
@@ -142,11 +184,23 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  username: String
+  name: String
+  email: String
+  password: String
+  role: Role
+  status: UserStatus
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input UserUpdateManyMutationInput {
-  username: String
+  name: String
+  email: String
+  password: String
+  role: Role
+  status: UserStatus
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input UserWhereInput {
@@ -192,48 +246,193 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  username: String
+  name: String
 
   """All values that are not equal to given value."""
-  username_not: String
+  name_not: String
 
   """All values that are contained in given list."""
-  username_in: [String!]
+  name_in: [String!]
 
   """All values that are not contained in given list."""
-  username_not_in: [String!]
+  name_not_in: [String!]
 
   """All values less than the given value."""
-  username_lt: String
+  name_lt: String
 
   """All values less than or equal the given value."""
-  username_lte: String
+  name_lte: String
 
   """All values greater than the given value."""
-  username_gt: String
+  name_gt: String
 
   """All values greater than or equal the given value."""
-  username_gte: String
+  name_gte: String
 
   """All values containing the given string."""
-  username_contains: String
+  name_contains: String
 
   """All values not containing the given string."""
-  username_not_contains: String
+  name_not_contains: String
 
   """All values starting with the given string."""
-  username_starts_with: String
+  name_starts_with: String
 
   """All values not starting with the given string."""
-  username_not_starts_with: String
+  name_not_starts_with: String
 
   """All values ending with the given string."""
-  username_ends_with: String
+  name_ends_with: String
 
   """All values not ending with the given string."""
-  username_not_ends_with: String
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  role: Role
+
+  """All values that are not equal to given value."""
+  role_not: Role
+
+  """All values that are contained in given list."""
+  role_in: [Role!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [Role!]
+  status: UserStatus
+
+  """All values that are not equal to given value."""
+  status_not: UserStatus
+
+  """All values that are contained in given list."""
+  status_in: [UserStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [UserStatus!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
