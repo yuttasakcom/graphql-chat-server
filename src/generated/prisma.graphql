@@ -1,5 +1,13 @@
 # source: http://localhost:4466
-# timestamp: Sun Mar 17 2019 23:47:06 GMT+0700 (Indochina Time)
+# timestamp: Mon Mar 18 2019 21:39:54 GMT+0700 (Indochina Time)
+
+type AggregateChat {
+  count: Int!
+}
+
+type AggregateChatRoom {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -8,6 +16,1131 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type Chat implements Node {
+  id: ID!
+  sender: User!
+  room: ChatRoom!
+  message: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""A connection to a list of items."""
+type ChatConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ChatEdge]!
+  aggregate: AggregateChat!
+}
+
+input ChatCreateInput {
+  message: String!
+  createdAt: String!
+  updatedAt: String!
+  sender: UserCreateOneInput!
+  room: ChatRoomCreateOneInput!
+}
+
+input ChatCreateManyInput {
+  create: [ChatCreateInput!]
+  connect: [ChatWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type ChatEdge {
+  """The item at the end of the edge."""
+  node: Chat!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ChatOrderByInput {
+  id_ASC
+  id_DESC
+  message_ASC
+  message_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ChatPreviousValues {
+  id: ID!
+  message: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ChatRoom implements Node {
+  id: ID!
+  name: String!
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  type: ChatRoomType!
+  image: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""A connection to a list of items."""
+type ChatRoomConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ChatRoomEdge]!
+  aggregate: AggregateChatRoom!
+}
+
+input ChatRoomCreateInput {
+  name: String!
+  type: ChatRoomType!
+  image: String
+  createdAt: String!
+  updatedAt: String!
+  chats: ChatCreateManyInput
+  owners: UserCreateManyInput
+  members: UserCreateManyInput
+}
+
+input ChatRoomCreateManyInput {
+  create: [ChatRoomCreateInput!]
+  connect: [ChatRoomWhereUniqueInput!]
+}
+
+input ChatRoomCreateOneInput {
+  create: ChatRoomCreateInput
+  connect: ChatRoomWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type ChatRoomEdge {
+  """The item at the end of the edge."""
+  node: ChatRoom!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ChatRoomOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  type_ASC
+  type_DESC
+  image_ASC
+  image_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ChatRoomPreviousValues {
+  id: ID!
+  name: String!
+  type: ChatRoomType!
+  image: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input ChatRoomScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatRoomScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ChatRoomScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ChatRoomScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  type: ChatRoomType
+
+  """All values that are not equal to given value."""
+  type_not: ChatRoomType
+
+  """All values that are contained in given list."""
+  type_in: [ChatRoomType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ChatRoomType!]
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  createdAt: String
+
+  """All values that are not equal to given value."""
+  createdAt_not: String
+
+  """All values that are contained in given list."""
+  createdAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [String!]
+
+  """All values less than the given value."""
+  createdAt_lt: String
+
+  """All values less than or equal the given value."""
+  createdAt_lte: String
+
+  """All values greater than the given value."""
+  createdAt_gt: String
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: String
+
+  """All values containing the given string."""
+  createdAt_contains: String
+
+  """All values not containing the given string."""
+  createdAt_not_contains: String
+
+  """All values starting with the given string."""
+  createdAt_starts_with: String
+
+  """All values not starting with the given string."""
+  createdAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  createdAt_ends_with: String
+
+  """All values not ending with the given string."""
+  createdAt_not_ends_with: String
+  updatedAt: String
+
+  """All values that are not equal to given value."""
+  updatedAt_not: String
+
+  """All values that are contained in given list."""
+  updatedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  updatedAt_lt: String
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: String
+
+  """All values greater than the given value."""
+  updatedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: String
+
+  """All values containing the given string."""
+  updatedAt_contains: String
+
+  """All values not containing the given string."""
+  updatedAt_not_contains: String
+
+  """All values starting with the given string."""
+  updatedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  updatedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  updatedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  updatedAt_not_ends_with: String
+}
+
+type ChatRoomSubscriptionPayload {
+  mutation: MutationType!
+  node: ChatRoom
+  updatedFields: [String!]
+  previousValues: ChatRoomPreviousValues
+}
+
+input ChatRoomSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatRoomSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ChatRoomWhereInput
+}
+
+enum ChatRoomType {
+  PRIVATE
+  GROUP
+}
+
+input ChatRoomUpdateDataInput {
+  name: String
+  type: ChatRoomType
+  image: String
+  createdAt: String
+  updatedAt: String
+  chats: ChatUpdateManyInput
+  owners: UserUpdateManyInput
+  members: UserUpdateManyInput
+}
+
+input ChatRoomUpdateInput {
+  name: String
+  type: ChatRoomType
+  image: String
+  createdAt: String
+  updatedAt: String
+  chats: ChatUpdateManyInput
+  owners: UserUpdateManyInput
+  members: UserUpdateManyInput
+}
+
+input ChatRoomUpdateManyDataInput {
+  name: String
+  type: ChatRoomType
+  image: String
+  createdAt: String
+  updatedAt: String
+}
+
+input ChatRoomUpdateManyInput {
+  create: [ChatRoomCreateInput!]
+  connect: [ChatRoomWhereUniqueInput!]
+  set: [ChatRoomWhereUniqueInput!]
+  disconnect: [ChatRoomWhereUniqueInput!]
+  delete: [ChatRoomWhereUniqueInput!]
+  update: [ChatRoomUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ChatRoomUpdateManyWithWhereNestedInput!]
+  deleteMany: [ChatRoomScalarWhereInput!]
+  upsert: [ChatRoomUpsertWithWhereUniqueNestedInput!]
+}
+
+input ChatRoomUpdateManyMutationInput {
+  name: String
+  type: ChatRoomType
+  image: String
+  createdAt: String
+  updatedAt: String
+}
+
+input ChatRoomUpdateManyWithWhereNestedInput {
+  where: ChatRoomScalarWhereInput!
+  data: ChatRoomUpdateManyDataInput!
+}
+
+input ChatRoomUpdateOneRequiredInput {
+  create: ChatRoomCreateInput
+  connect: ChatRoomWhereUniqueInput
+  update: ChatRoomUpdateDataInput
+  upsert: ChatRoomUpsertNestedInput
+}
+
+input ChatRoomUpdateWithWhereUniqueNestedInput {
+  where: ChatRoomWhereUniqueInput!
+  data: ChatRoomUpdateDataInput!
+}
+
+input ChatRoomUpsertNestedInput {
+  update: ChatRoomUpdateDataInput!
+  create: ChatRoomCreateInput!
+}
+
+input ChatRoomUpsertWithWhereUniqueNestedInput {
+  where: ChatRoomWhereUniqueInput!
+  update: ChatRoomUpdateDataInput!
+  create: ChatRoomCreateInput!
+}
+
+input ChatRoomWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatRoomWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  type: ChatRoomType
+
+  """All values that are not equal to given value."""
+  type_not: ChatRoomType
+
+  """All values that are contained in given list."""
+  type_in: [ChatRoomType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ChatRoomType!]
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  createdAt: String
+
+  """All values that are not equal to given value."""
+  createdAt_not: String
+
+  """All values that are contained in given list."""
+  createdAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [String!]
+
+  """All values less than the given value."""
+  createdAt_lt: String
+
+  """All values less than or equal the given value."""
+  createdAt_lte: String
+
+  """All values greater than the given value."""
+  createdAt_gt: String
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: String
+
+  """All values containing the given string."""
+  createdAt_contains: String
+
+  """All values not containing the given string."""
+  createdAt_not_contains: String
+
+  """All values starting with the given string."""
+  createdAt_starts_with: String
+
+  """All values not starting with the given string."""
+  createdAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  createdAt_ends_with: String
+
+  """All values not ending with the given string."""
+  createdAt_not_ends_with: String
+  updatedAt: String
+
+  """All values that are not equal to given value."""
+  updatedAt_not: String
+
+  """All values that are contained in given list."""
+  updatedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  updatedAt_lt: String
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: String
+
+  """All values greater than the given value."""
+  updatedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: String
+
+  """All values containing the given string."""
+  updatedAt_contains: String
+
+  """All values not containing the given string."""
+  updatedAt_not_contains: String
+
+  """All values starting with the given string."""
+  updatedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  updatedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  updatedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  updatedAt_not_ends_with: String
+  chats_some: ChatWhereInput
+  owners_some: UserWhereInput
+  members_some: UserWhereInput
+}
+
+input ChatRoomWhereUniqueInput {
+  id: ID
+}
+
+input ChatScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ChatScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ChatScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  createdAt: String
+
+  """All values that are not equal to given value."""
+  createdAt_not: String
+
+  """All values that are contained in given list."""
+  createdAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [String!]
+
+  """All values less than the given value."""
+  createdAt_lt: String
+
+  """All values less than or equal the given value."""
+  createdAt_lte: String
+
+  """All values greater than the given value."""
+  createdAt_gt: String
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: String
+
+  """All values containing the given string."""
+  createdAt_contains: String
+
+  """All values not containing the given string."""
+  createdAt_not_contains: String
+
+  """All values starting with the given string."""
+  createdAt_starts_with: String
+
+  """All values not starting with the given string."""
+  createdAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  createdAt_ends_with: String
+
+  """All values not ending with the given string."""
+  createdAt_not_ends_with: String
+  updatedAt: String
+
+  """All values that are not equal to given value."""
+  updatedAt_not: String
+
+  """All values that are contained in given list."""
+  updatedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  updatedAt_lt: String
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: String
+
+  """All values greater than the given value."""
+  updatedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: String
+
+  """All values containing the given string."""
+  updatedAt_contains: String
+
+  """All values not containing the given string."""
+  updatedAt_not_contains: String
+
+  """All values starting with the given string."""
+  updatedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  updatedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  updatedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  updatedAt_not_ends_with: String
+}
+
+type ChatSubscriptionPayload {
+  mutation: MutationType!
+  node: Chat
+  updatedFields: [String!]
+  previousValues: ChatPreviousValues
+}
+
+input ChatSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ChatWhereInput
+}
+
+input ChatUpdateDataInput {
+  message: String
+  createdAt: String
+  updatedAt: String
+  sender: UserUpdateOneRequiredInput
+  room: ChatRoomUpdateOneRequiredInput
+}
+
+input ChatUpdateInput {
+  message: String
+  createdAt: String
+  updatedAt: String
+  sender: UserUpdateOneRequiredInput
+  room: ChatRoomUpdateOneRequiredInput
+}
+
+input ChatUpdateManyDataInput {
+  message: String
+  createdAt: String
+  updatedAt: String
+}
+
+input ChatUpdateManyInput {
+  create: [ChatCreateInput!]
+  connect: [ChatWhereUniqueInput!]
+  set: [ChatWhereUniqueInput!]
+  disconnect: [ChatWhereUniqueInput!]
+  delete: [ChatWhereUniqueInput!]
+  update: [ChatUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ChatUpdateManyWithWhereNestedInput!]
+  deleteMany: [ChatScalarWhereInput!]
+  upsert: [ChatUpsertWithWhereUniqueNestedInput!]
+}
+
+input ChatUpdateManyMutationInput {
+  message: String
+  createdAt: String
+  updatedAt: String
+}
+
+input ChatUpdateManyWithWhereNestedInput {
+  where: ChatScalarWhereInput!
+  data: ChatUpdateManyDataInput!
+}
+
+input ChatUpdateWithWhereUniqueNestedInput {
+  where: ChatWhereUniqueInput!
+  data: ChatUpdateDataInput!
+}
+
+input ChatUpsertWithWhereUniqueNestedInput {
+  where: ChatWhereUniqueInput!
+  update: ChatUpdateDataInput!
+  create: ChatCreateInput!
+}
+
+input ChatWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  createdAt: String
+
+  """All values that are not equal to given value."""
+  createdAt_not: String
+
+  """All values that are contained in given list."""
+  createdAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [String!]
+
+  """All values less than the given value."""
+  createdAt_lt: String
+
+  """All values less than or equal the given value."""
+  createdAt_lte: String
+
+  """All values greater than the given value."""
+  createdAt_gt: String
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: String
+
+  """All values containing the given string."""
+  createdAt_contains: String
+
+  """All values not containing the given string."""
+  createdAt_not_contains: String
+
+  """All values starting with the given string."""
+  createdAt_starts_with: String
+
+  """All values not starting with the given string."""
+  createdAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  createdAt_ends_with: String
+
+  """All values not ending with the given string."""
+  createdAt_not_ends_with: String
+  updatedAt: String
+
+  """All values that are not equal to given value."""
+  updatedAt_not: String
+
+  """All values that are contained in given list."""
+  updatedAt_in: [String!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [String!]
+
+  """All values less than the given value."""
+  updatedAt_lt: String
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: String
+
+  """All values greater than the given value."""
+  updatedAt_gt: String
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: String
+
+  """All values containing the given string."""
+  updatedAt_contains: String
+
+  """All values not containing the given string."""
+  updatedAt_not_contains: String
+
+  """All values starting with the given string."""
+  updatedAt_starts_with: String
+
+  """All values not starting with the given string."""
+  updatedAt_not_starts_with: String
+
+  """All values ending with the given string."""
+  updatedAt_ends_with: String
+
+  """All values not ending with the given string."""
+  updatedAt_not_ends_with: String
+  sender: UserWhereInput
+  room: ChatRoomWhereInput
+}
+
+input ChatWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -19,12 +1152,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createChatRoom(data: ChatRoomCreateInput!): ChatRoom!
   createUser(data: UserCreateInput!): User!
+  createChat(data: ChatCreateInput!): Chat!
+  updateChatRoom(data: ChatRoomUpdateInput!, where: ChatRoomWhereUniqueInput!): ChatRoom
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+  deleteChatRoom(where: ChatRoomWhereUniqueInput!): ChatRoom
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteChat(where: ChatWhereUniqueInput!): Chat
+  upsertChatRoom(where: ChatRoomWhereUniqueInput!, create: ChatRoomCreateInput!, update: ChatRoomUpdateInput!): ChatRoom!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
+  updateManyChatRooms(data: ChatRoomUpdateManyMutationInput!, where: ChatRoomWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyChats(data: ChatUpdateManyMutationInput!, where: ChatWhereInput): BatchPayload!
+  deleteManyChatRooms(where: ChatRoomWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyChats(where: ChatWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -55,9 +1200,15 @@ type PageInfo {
 }
 
 type Query {
+  chatRooms(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
+  chatRoom(where: ChatRoomWhereUniqueInput!): ChatRoom
   user(where: UserWhereUniqueInput!): User
+  chat(where: ChatWhereUniqueInput!): Chat
+  chatRoomsConnection(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatRoomConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -72,7 +1223,9 @@ enum Role {
 }
 
 type Subscription {
+  chatRoom(where: ChatRoomSubscriptionWhereInput): ChatRoomSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
 }
 
 type User implements Node {
@@ -84,6 +1237,8 @@ type User implements Node {
   status: UserStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
+  chatrooms(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom!]
 }
 
 """A connection to a list of items."""
@@ -104,6 +1259,18 @@ input UserCreateInput {
   status: UserStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+  chats: ChatCreateManyInput
+  chatrooms: ChatRoomCreateManyInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -145,6 +1312,241 @@ type UserPreviousValues {
   updatedAt: DateTime!
 }
 
+input UserScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  role: Role
+
+  """All values that are not equal to given value."""
+  role_not: Role
+
+  """All values that are contained in given list."""
+  role_in: [Role!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [Role!]
+  status: UserStatus
+
+  """All values that are not equal to given value."""
+  status_not: UserStatus
+
+  """All values that are contained in given list."""
+  status_in: [UserStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [UserStatus!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
 enum UserStatus {
   ENABLE
   DISABLE
@@ -183,6 +1585,18 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  role: Role
+  status: UserStatus
+  createdAt: DateTime
+  updatedAt: DateTime
+  chats: ChatUpdateManyInput
+  chatrooms: ChatRoomUpdateManyInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -191,6 +1605,30 @@ input UserUpdateInput {
   status: UserStatus
   createdAt: DateTime
   updatedAt: DateTime
+  chats: ChatUpdateManyInput
+  chatrooms: ChatRoomUpdateManyInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  email: String
+  password: String
+  role: Role
+  status: UserStatus
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
 input UserUpdateManyMutationInput {
@@ -201,6 +1639,34 @@ input UserUpdateManyMutationInput {
   status: UserStatus
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -430,6 +1896,8 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  chats_some: ChatWhereInput
+  chatrooms_some: ChatRoomWhereInput
 }
 
 input UserWhereUniqueInput {

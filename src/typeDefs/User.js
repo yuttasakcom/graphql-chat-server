@@ -18,6 +18,8 @@ export default gql`
     status: UserStatus!
     createdAt: String!
     updatedAt: String!
+    chats: [Chat]
+    chatrooms: [ChatRoom]
   }
 
   input SignUpInput {
