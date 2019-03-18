@@ -1,10 +1,4 @@
-import { users, signup } from "./User";
+import User from "./User";
+import Chat from "./Chat";
 
-export default {
-  Query: {
-    users
-  },
-  Mutation: {
-    signup
-  }
-};
+export default [User, Chat];

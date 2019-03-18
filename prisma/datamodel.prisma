@@ -7,7 +7,6 @@ type User {
   status: UserStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
-  chats: [Chat] @relation(link: INLINE, name: "ChatToUser", onDelete: CASCADE)
   chatrooms: [ChatRoom] @relation(link: INLINE, name: "ChatRoomToUser", onDelete: CASCADE)
 }
 
@@ -22,27 +21,7 @@ enum UserStatus {
 }
 
 type ChatRoom {
-    id: ID! @id
-    name: String!
-    chats: [Chat!]! @relation(link: INLINE, name: "ChatToChatRoom", onDelete: CASCADE)
-    owners: [User!]! @relation(link: INLINE, name: "OwnerToUser", onDelete: SET_NULL)
-    members: [User!]! @relation(link: INLINE, name: "MemberToUser", onDelete: SET_NULL)
-    type: ChatRoomType!
-    image: String
-    createdAt: String!
-    updatedAt: String!
-  }
-
-  type Chat {
-    id: ID! @id
-    sender: User! @relation(link: INLINE, name: "SenderToUser", onDelete: SET_NULL)
-    room: ChatRoom! @relation(link: INLINE, name: "RoomToChatRoom", onDelete: SET_NULL)
-    message: String!
-    createdAt: String!
-    updatedAt: String!
-  }
-
-  enum ChatRoomType {
-    PRIVATE
-    GROUP
-  }
+  id: ID! @id
+  name: String!
+  owners: [User!]! @relation(link: INLINE, name: "OwnerToUser", onDelete: SET_NULL)
+}

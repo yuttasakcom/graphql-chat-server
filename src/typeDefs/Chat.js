@@ -1,29 +1,22 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
+  extend type Query {
+    chatRooms: [ChatRoom!]!
+  }
+
+  extend type Mutation {
+    createChatRoom(data: CreateChatRoomInput!): ChatRoom!
+  }
+
+  input CreateChatRoomInput {
+    name: String!
+    owners: ID!
+  }
+
   type ChatRoom {
     id: ID!
     name: String!
-    chats: [Chat!]!
     owners: [User!]!
-    members: [User!]!
-    type: ChatRoomType!
-    image: String
-    createdAt: String!
-    updatedAt: String!
-  }
-
-  type Chat {
-    id: ID!
-    sender: User!
-    message: String!
-    room: ChatRoom!
-    createdAt: String!
-    updatedAt: String!
-  }
-
-  enum ChatRoomType {
-    PRIVATE
-    GROUP
   }
 `;
