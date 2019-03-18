@@ -2,7 +2,20 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   extend type Query {
-    chatRooms: [ChatRoom!]!
+    chatRooms(
+      query: String
+      first: Int
+      skip: Int
+      after: String
+      orderBy: ChatRoomOrderByInput
+    ): [ChatRoom!]!
+  }
+
+  enum ChatRoomOrderByInput {
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
   }
 
   extend type Mutation {
