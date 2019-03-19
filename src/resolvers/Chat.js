@@ -1,3 +1,5 @@
+import { withFilter } from "apollo-server-express";
+
 export default {
   Query: {
     chatRooms: async (root, args, { prisma }, info) => {
@@ -50,9 +52,13 @@ export default {
   },
   Subscription: {
     chatCreated: {
-      subscribe: (parent, args, { pubsub }) =>
-        pubsub.asyncIterator("chatCreated"),
-      resolve: parent => parent,
+      subscribe: withFilter(
+        (parent, args, { pubsub }) => pubsub.asyncIterator("chatCreated"),
+        (payload, args) => {
+          return payload.chatRoom.id === args.chatRoom;
+        }
+      ),
+      resolve: payload => payload,
     },
   },
 };
