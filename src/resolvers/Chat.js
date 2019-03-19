@@ -2,7 +2,7 @@ import { withFilter } from "apollo-server-express";
 
 export default {
   Query: {
-    chatRooms: async (root, args, { prisma }, info) => {
+    chatRooms: async (parent, args, { prisma }, info) => {
       const opArgs = {
         first: args.first,
         skip: args.skip,
@@ -23,7 +23,7 @@ export default {
     },
   },
   Mutation: {
-    createChatRoom: async (root, { data }, { prisma }, info) => {
+    createChatRoom: async (parent, { data }, { prisma }, info) => {
       data.owners = {
         connect: {
           id: data.owners,
@@ -34,7 +34,7 @@ export default {
 
       return await prisma.mutation.createChatRoom({ data }, info);
     },
-    createChatMessage: async (root, { data }, { prisma, pubsub }, info) => {
+    createChatMessage: async (parent, { data }, { prisma, pubsub }, info) => {
       data.sender = {
         connect: {
           id: data.sender,
@@ -54,9 +54,7 @@ export default {
     chatCreated: {
       subscribe: withFilter(
         (parent, args, { pubsub }) => pubsub.asyncIterator("chatCreated"),
-        (payload, args) => {
-          return payload.chatRoom.id === args.chatRoom;
-        }
+        (payload, args) => payload.chatRoom.id === args.chatRoom
       ),
       resolve: payload => payload,
     },

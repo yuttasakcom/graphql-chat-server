@@ -2,10 +2,10 @@ import hashPassword from "../utils/hashPassword";
 
 export default {
   Query: {
-    users: async (root, args, { prisma }) => await prisma.query.users()
+    users: async (parent, args, { prisma }) => await prisma.query.users(),
   },
   Mutation: {
-    signup: async (root, { data }, { prisma }, info) => {
+    signup: async (parent, { data }, { prisma }, info) => {
       const dateTime = new Date().toISOString();
       data.createdAt = dateTime;
       data.updatedAt = dateTime;
@@ -13,6 +13,6 @@ export default {
       data.status = "ENABLE";
       data.password = await hashPassword(data.password);
       return await prisma.mutation.createUser({ data }, info);
-    }
-  }
+    },
+  },
 };
