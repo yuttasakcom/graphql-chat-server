@@ -32,6 +32,8 @@ export default gql`
     name: String!
     owners: [User!]!
     members: [User]
+    createdAt: String!
+    updatedAt: String!
   }
 
   type ChatMessage {
@@ -39,6 +41,8 @@ export default gql`
     text: String!
     sender: User!
     chatRoom: ChatRoom!
+    createdAt: String!
+    updatedAt: String!
   }
 
   enum ChatRoomOrderByInput {
@@ -46,6 +50,10 @@ export default gql`
     id_DESC
     name_ASC
     name_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
   }
 
   enum ChatMessageOrderByInput {
@@ -53,6 +61,10 @@ export default gql`
     id_DESC
     text_ASC
     text_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
   }
 
   input CreateChatMessageInput {

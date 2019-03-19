@@ -13,12 +13,14 @@ export default gql`
     id: ID!
     name: String!
     email: String!
-    password: String!
+    password: String
     role: Role!
     status: UserStatus!
     createdAt: String!
     updatedAt: String!
-    chatrooms: [ChatRoom]
+    chatRoomOwners: [ChatRoom]
+    chatRoomMembers: [ChatRoom]
+    chats: [ChatMessage]
   }
 
   input SignUpInput {

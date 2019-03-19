@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Mar 19 2019 14:25:25 GMT+0700 (Indochina Time)
+# timestamp: Tue Mar 19 2019 18:53:13 GMT+0700 (Indochina Time)
 
 type AggregateChatMessage {
   count: Int!
@@ -23,6 +23,8 @@ type ChatMessage implements Node {
   text: String!
   sender: User!
   chatRoom: ChatRoom!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -37,6 +39,8 @@ type ChatMessageConnection {
 
 input ChatMessageCreateInput {
   text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   sender: UserCreateOneInput!
   chatRoom: ChatRoomCreateOneInput!
 }
@@ -60,11 +64,17 @@ enum ChatMessageOrderByInput {
   id_DESC
   text_ASC
   text_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ChatMessagePreviousValues {
   id: ID!
   text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ChatMessageScalarWhereInput {
@@ -156,6 +166,50 @@ input ChatMessageScalarWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type ChatMessageSubscriptionPayload {
@@ -193,18 +247,24 @@ input ChatMessageSubscriptionWhereInput {
 
 input ChatMessageUpdateDataInput {
   text: String
+  createdAt: DateTime
+  updatedAt: DateTime
   sender: UserUpdateOneRequiredInput
   chatRoom: ChatRoomUpdateOneRequiredInput
 }
 
 input ChatMessageUpdateInput {
   text: String
+  createdAt: DateTime
+  updatedAt: DateTime
   sender: UserUpdateOneRequiredInput
   chatRoom: ChatRoomUpdateOneRequiredInput
 }
 
 input ChatMessageUpdateManyDataInput {
   text: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ChatMessageUpdateManyInput {
@@ -221,6 +281,8 @@ input ChatMessageUpdateManyInput {
 
 input ChatMessageUpdateManyMutationInput {
   text: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ChatMessageUpdateManyWithWhereNestedInput {
@@ -322,6 +384,50 @@ input ChatMessageWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   sender: UserWhereInput
   chatRoom: ChatRoomWhereInput
 }
@@ -333,9 +439,11 @@ input ChatMessageWhereUniqueInput {
 type ChatRoom implements Node {
   id: ID!
   name: String!
-  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  owners: User!
   members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   chats(where: ChatMessageWhereInput, orderBy: ChatMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatMessage!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -350,7 +458,9 @@ type ChatRoomConnection {
 
 input ChatRoomCreateInput {
   name: String!
-  owners: UserCreateManyInput
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owners: UserCreateOneInput!
   members: UserCreateManyInput
   chats: ChatMessageCreateManyInput
 }
@@ -379,11 +489,17 @@ enum ChatRoomOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ChatRoomPreviousValues {
   id: ID!
   name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ChatRoomScalarWhereInput {
@@ -475,6 +591,50 @@ input ChatRoomScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type ChatRoomSubscriptionPayload {
@@ -512,20 +672,26 @@ input ChatRoomSubscriptionWhereInput {
 
 input ChatRoomUpdateDataInput {
   name: String
-  owners: UserUpdateManyInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  owners: UserUpdateOneRequiredInput
   members: UserUpdateManyInput
   chats: ChatMessageUpdateManyInput
 }
 
 input ChatRoomUpdateInput {
   name: String
-  owners: UserUpdateManyInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  owners: UserUpdateOneRequiredInput
   members: UserUpdateManyInput
   chats: ChatMessageUpdateManyInput
 }
 
 input ChatRoomUpdateManyDataInput {
   name: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ChatRoomUpdateManyInput {
@@ -542,6 +708,8 @@ input ChatRoomUpdateManyInput {
 
 input ChatRoomUpdateManyMutationInput {
   name: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ChatRoomUpdateManyWithWhereNestedInput {
@@ -655,7 +823,51 @@ input ChatRoomWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  owners_some: UserWhereInput
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  owners: UserWhereInput
   members_some: UserWhereInput
   chats_some: ChatMessageWhereInput
 }
@@ -758,7 +970,8 @@ type User implements Node {
   status: UserStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
-  chatrooms(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom!]
+  chatRoomOwners(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom!]
+  chatRoomMembers(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom!]
   chats(where: ChatMessageWhereInput, orderBy: ChatMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatMessage!]
 }
 
@@ -780,7 +993,8 @@ input UserCreateInput {
   status: UserStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
-  chatrooms: ChatRoomCreateManyInput
+  chatRoomOwners: ChatRoomCreateManyInput
+  chatRoomMembers: ChatRoomCreateManyInput
   chats: ChatMessageCreateManyInput
 }
 
@@ -1114,7 +1328,8 @@ input UserUpdateDataInput {
   status: UserStatus
   createdAt: DateTime
   updatedAt: DateTime
-  chatrooms: ChatRoomUpdateManyInput
+  chatRoomOwners: ChatRoomUpdateManyInput
+  chatRoomMembers: ChatRoomUpdateManyInput
   chats: ChatMessageUpdateManyInput
 }
 
@@ -1126,7 +1341,8 @@ input UserUpdateInput {
   status: UserStatus
   createdAt: DateTime
   updatedAt: DateTime
-  chatrooms: ChatRoomUpdateManyInput
+  chatRoomOwners: ChatRoomUpdateManyInput
+  chatRoomMembers: ChatRoomUpdateManyInput
   chats: ChatMessageUpdateManyInput
 }
 
@@ -1417,7 +1633,8 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  chatrooms_some: ChatRoomWhereInput
+  chatRoomOwners_some: ChatRoomWhereInput
+  chatRoomMembers_some: ChatRoomWhereInput
   chats_some: ChatMessageWhereInput
 }
 
