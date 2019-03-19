@@ -18,10 +18,6 @@ const server = new ApolloServer({
     prisma,
     pubsub,
   },
-  subscriptions: {
-    onConnect: () => console.log("Connected to websocket"),
-  },
-  tracing: true,
 });
 
 server.applyMiddleware({ app });

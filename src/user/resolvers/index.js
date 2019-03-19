@@ -1,4 +1,4 @@
-import hashPassword from "../utils/hashPassword";
+import hashPassword from "../../utils/hashPassword";
 
 export default {
   Query: {

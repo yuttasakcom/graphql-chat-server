@@ -31,4 +31,9 @@ export default gql`
     ENABLE
     DISABLE
   }
+
+  enum Role {
+    USER
+    ADMIN
+  }
 `;

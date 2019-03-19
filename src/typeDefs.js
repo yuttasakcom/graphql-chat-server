@@ -1,8 +1,7 @@
 import { gql } from "apollo-server-express";
 
-import User from "./User";
-import Role from "./Role";
-import Chat from "./Chat";
+import User from "./user/schema";
+import Chat from "./chat/schema";
 
 const baseTypeDefs = gql`
   type Query {
@@ -18,4 +17,4 @@ const baseTypeDefs = gql`
   }
 `;
 
-export default [baseTypeDefs, User, Role, Chat];
+export default [baseTypeDefs, User, Chat];
