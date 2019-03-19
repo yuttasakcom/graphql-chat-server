@@ -11,13 +11,6 @@ export default gql`
     ): [ChatRoom!]!
   }
 
-  enum ChatRoomOrderByInput {
-    id_ASC
-    id_DESC
-    name_ASC
-    name_DESC
-  }
-
   extend type Mutation {
     createChatRoom(data: CreateChatRoomInput!): ChatRoom!
   }
@@ -31,5 +24,12 @@ export default gql`
     id: ID!
     name: String!
     owners: [User!]!
+  }
+
+  enum ChatRoomOrderByInput {
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
   }
 `;
