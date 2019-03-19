@@ -30,7 +30,7 @@ export default gql`
   type ChatRoom {
     id: ID!
     name: String!
-    owners: [User!]!
+    owners: User!
     members: [User]
     createdAt: String!
     updatedAt: String!

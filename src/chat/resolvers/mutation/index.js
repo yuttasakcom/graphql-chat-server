@@ -1,6 +1,11 @@
+const dateTime = new Date().toISOString();
+
 export default {
   Mutation: {
     createChatRoom: async (parent, { data }, { prisma }, info) => {
+      data.createdAt = dateTime;
+      data.updatedAt = dateTime;
+
       data.owners = {
         connect: {
           id: data.owners,
@@ -12,6 +17,8 @@ export default {
       return await prisma.mutation.createChatRoom({ data }, info);
     },
     createChatMessage: async (parent, { data }, { prisma, pubsub }, info) => {
+      data.createdAt = dateTime;
+      data.updatedAt = dateTime;
       data.sender = {
         connect: {
           id: data.sender,
