@@ -3,14 +3,24 @@ import { gql } from "apollo-server-express";
 export default gql`
   extend type Query {
     chatRooms(
-      query: String
       first: Int
+      last: Int
       skip: Int
+      before: String
       after: String
       orderBy: ChatRoomOrderByInput
+      where: ChatRoomWhereInput
     ): [ChatRoom!]!
 
-    chats: [ChatMessage!]!
+    chats(
+      first: Int
+      last: Int
+      skip: Int
+      before: String
+      after: String
+      orderBy: ChatMessageOrderByInput
+      where: ChatMessageWhereInput
+    ): [ChatMessage!]!
   }
 
   extend type Mutation {
@@ -71,5 +81,14 @@ export default gql`
     text: String!
     sender: ID!
     chatRoom: ID!
+  }
+
+  input ChatRoomWhereInput {
+    id: ID
+  }
+
+  input ChatMessageWhereInput {
+    id: ID
+    chatRoom: ChatRoomWhereInput
   }
 `;
