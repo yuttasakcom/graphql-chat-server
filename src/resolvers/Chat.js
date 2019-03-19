@@ -32,7 +32,7 @@ export default {
 
       return await prisma.mutation.createChatRoom({ data }, info);
     },
-    createChatMessage: async (root, { data }, { prisma }, info) => {
+    createChatMessage: async (root, { data }, { prisma, pubsub }, info) => {
       data.sender = {
         connect: {
           id: data.sender,
@@ -43,7 +43,16 @@ export default {
           id: data.chatRoom,
         },
       };
-      return await prisma.mutation.createChatMessage({ data }, info);
+      const message = await prisma.mutation.createChatMessage({ data }, info);
+      pubsub.publish("chatCreated", message);
+      return message;
+    },
+  },
+  Subscription: {
+    chatCreated: {
+      subscribe: (parent, args, { pubsub }) =>
+        pubsub.asyncIterator("chatCreated"),
+      resolve: parent => parent,
     },
   },
 };

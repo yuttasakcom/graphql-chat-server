@@ -18,6 +18,10 @@ export default gql`
     createChatMessage(data: CreateChatMessageInput!): ChatMessage!
   }
 
+  extend type Subscription {
+    chatCreated(chatRoom: ID!): ChatMessage
+  }
+
   input CreateChatRoomInput {
     name: String!
     owners: ID!
