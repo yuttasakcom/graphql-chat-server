@@ -1,1 +1,1 @@
-# Nuxt Graphql Chat Sample
+# GraphQL Chat Server
