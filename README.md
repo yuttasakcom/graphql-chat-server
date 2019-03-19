@@ -29,5 +29,5 @@ $ npm run dev
 ## Open Browser
 
 ```
-
+http://localhost:4000/graphql
 ```
