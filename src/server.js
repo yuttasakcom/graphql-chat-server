@@ -1,7 +1,32 @@
-import app from "./app";
+import http from "http";
+import express from "express";
+import { ApolloServer, PubSub } from "apollo-server-express";
 
-const port = process.env.PORT || "4000";
+import prisma from "./prisma";
+import resolvers from "./resolvers";
+import typeDefs from "./typeDefs";
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const app = express();
+app.set("port", process.env.PORT || "4000");
+
+const pubsub = new PubSub();
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: {
+    prisma,
+    pubsub,
+  },
+  subscriptions: {
+    onConnect: () => console.log("Connected to websocket"),
+  },
+  tracing: true,
 });
+
+server.applyMiddleware({ app });
+
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+export default httpServer;

@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/yuttasakcom/graphql-chat-server#readme",
   "scripts": {
-    "dev": "env-cmd ./dev.env nodemon src/server.js --exec babel-node",
+    "dev": "env-cmd ./dev.env nodemon src/index.js --exec babel-node",
     "get-schema": "graphql get-schema -p prisma --dotenv dev.env",
     "prisma-deploy": "prisma deploy --env-file dev.env"
   },
